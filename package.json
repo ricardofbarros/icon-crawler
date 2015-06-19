@@ -13,6 +13,7 @@
   "dependencies": {
     "crawler": "^0.4.3",
     "express": "^4.12.4",
+    "express-boom": "^0.3.0",
     "hiredis": "^0.4.0",
     "redis": "^0.12.1"
   },
