@@ -10,7 +10,7 @@ var app = express();
 // Add boom middleware
 app.use(boom());
 
-app.get('/get', function (req, res, next) {
+app.get('/get', function (req, res) {
   if (!req.query.domain) {
     return res.boom.badRequest('Missing query param domain');
   }
@@ -23,12 +23,11 @@ app.get('/get', function (req, res, next) {
 
   crawler.queue({
     uri: url.format(domain),
-    callback: function (err, res, $) {
-
-    }
+    callback: crawler.findFavicon.bind({ res: res })
   });
 });
 
+// Not found handler
 app.use(function (req, res) {
   return res.boom.notFound();
 });
