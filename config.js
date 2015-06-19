@@ -5,7 +5,9 @@ config.http = {
 };
 
 config.crawler = {
-  maxConnections: process.env.APP_CRAWLER_MAX_CONN || 10
+  maxConnections: process.env.APP_CRAWLER_MAX_CONN || 10,
+  timeout: process.env.APP_CRAWLER_TIMEOUT || 5000, // ms
+  retries: process.env.APP_CRAWLER_RETRIES || 1
 };
 
 module.exports = config;
