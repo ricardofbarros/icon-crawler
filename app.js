@@ -7,7 +7,7 @@ var boom = require('express-boom');
 
 var app = express();
 
-// Add boom middleware
+// Middlewares
 app.use(boom());
 
 app.get('/get', function (req, res) {
@@ -15,16 +15,29 @@ app.get('/get', function (req, res) {
     return res.boom.badRequest('Missing query param domain');
   }
 
+  var type = !req.query.type ? 'favicon' : req.query.type;
+
+  var possibleTypes = [
+    'favicon',
+    'svg',
+    'fluid',
+    'msapp'
+  ];
+
+  if (possibleTypes.indexOf(type) < 0) {
+    return res.boom.badRequest('Invalid type');
+  }
+
   var domain = url.parse(req.query.domain);
 
   if (!domain.protocol) {
-    return res.boom.badRequest('Query param domain is not a valid domain');
+    return res.boom.badRequest('Invalid domain');
   }
 
   crawler.queue({
-    uri: url.format(domain),
-    callback: crawler.findFavicon.bind({ res: res })
-  });
+    uri: req.query.domain,
+    callback: crawler.findIcons.bind({ res: res, type: type })
+  })
 });
 
 // Not found handler
