@@ -21,7 +21,8 @@ app.get('/get', function (req, res) {
     'favicon',
     'svg',
     'fluid',
-    'msapp'
+    'msapp',
+    'all'
   ];
 
   if (possibleTypes.indexOf(type) < 0) {
@@ -37,7 +38,7 @@ app.get('/get', function (req, res) {
   crawler.queue({
     uri: req.query.domain,
     callback: crawler.findIcons.bind({ res: res, type: type })
-  })
+  });
 });
 
 // Not found handler
