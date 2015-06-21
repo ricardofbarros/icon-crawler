@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": " ",
-    "start": "NODE_PATH=. node app.js",
-    "mon": "NODE_PATH=. nodemon app.js"
+    "start": "NODE_PATH=. node index.js",
+    "dev": "NODE_PATH=. nodemon app.js"
   },
   "author": "Ricardo Barros <ricardofbarros@hotmail.com>",
   "license": "MIT",

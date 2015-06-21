@@ -9,11 +9,16 @@ npm i
 npm start
 ```
 
+## Strategies
 
-## Concerns
+### To find the favicon
 
-The following links are very useful:
+### To scale
+
+####
+
+## Reading material
 
 - [http://realfavicongenerator.net/faq](http://realfavicongenerator.net/faq)
-
 - [http://www.w3.org/2005/10/howto-favicon](http://www.w3.org/2005/10/howto-favicon)
+- [https://en.wikipedia.org/wiki/Favicon](https://en.wikipedia.org/wiki/Favicon)

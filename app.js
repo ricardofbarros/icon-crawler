@@ -22,11 +22,22 @@ app.get('/get', function (req, res) {
     'svg',
     'fluid',
     'msapp',
-    'all'
+    'all',
+    'apple'
   ];
 
   if (possibleTypes.indexOf(type) < 0) {
     return res.boom.badRequest('Invalid type');
+  }
+
+  // Exception - clean array
+  // because all types must be processed
+  // before answering the request
+  if (type === 'all') {
+    possibleTypes = [];
+  } else {
+    possibleTypes.splice(possibleTypes.indexOf('all'));
+    possibleTypes.splice(type);
   }
 
   var domain = url.parse(req.query.domain);
@@ -37,7 +48,20 @@ app.get('/get', function (req, res) {
 
   crawler.queue({
     uri: req.query.domain,
-    callback: crawler.findIcons.bind({ res: res, type: type })
+    callback: crawler.findIcons.bind({
+      type: type,
+      callback: function (err, href) {
+        if (err) {
+          return res.boom.badRequest(err);
+        }
+
+        var sendObj = {};
+
+        sendObj[type] = href;
+
+        return res.json(sendObj);
+      }
+    })
   });
 });
 
