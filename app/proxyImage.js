@@ -12,7 +12,7 @@ module.exports = function (req, res) {
   try {
     var domain = util.url.decrypt(domainEncrypted);
   } catch(err) {
-    return res.boom.badRequest('Not a valid domain');
+    return res.boom.badRequest('Not a valid icon image, please try again');
   }
 
   request(domain).pipe(res);
