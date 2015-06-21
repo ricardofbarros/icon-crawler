@@ -1,11 +1,17 @@
 var config = {};
 
 config.app = {
-  numOfInstances: process.env.APP_NUM_INSTANCES || 'auto-detect' // TODO preciso de ver o nome disto
+  // TODO better name for this. is it needed?
+  numOfInstances: process.env.APP_NUM_INSTANCES || 'auto-detect',
+  // Smallest possible
+  // we dont need security
+  // we need speed
+  urlShortenerCipherPass: process.env.APP_URL_CIPHER || 'd'
 };
 
 config.http = {
-  port: process.env.APP_SERVER_PORT || 8000
+  port: process.env.APP_SERVER_PORT || 8000,
+  host: process.env.APP_SERVER_HOST || 'localhost'
 };
 
 config.crawler = {
