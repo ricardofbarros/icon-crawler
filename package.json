@@ -11,6 +11,7 @@
   "author": "Ricardo Barros <ricardofbarros@hotmail.com>",
   "license": "MIT",
   "dependencies": {
+    "async": "^1.2.1",
     "crawler": "^0.4.3",
     "express": "^4.12.4",
     "express-boom": "^0.3.0",
