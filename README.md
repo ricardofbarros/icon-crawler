@@ -12,9 +12,9 @@ npm start
 ## Icons
 
 - favicon
-- apple-touch-icon
+- apple-touch
 - svg
-- [fluid](http://fluidapp.com/)
+- [fluidapp](http://fluidapp.com/)
 - msapp
 
 ## Strategies
