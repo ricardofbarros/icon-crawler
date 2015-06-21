@@ -55,9 +55,14 @@ app.get('/get', function (req, res) {
           return res.boom.badRequest(err);
         }
 
-        var sendObj = {};
+        var sendObj;
 
-        sendObj[type] = href;
+        if (type !== 'all' && typeof href === 'string') {
+          sendObj = {};
+          sendObj[type] = href;
+        } else {
+          sendObj = href;
+        }
 
         return res.json(sendObj);
       }
