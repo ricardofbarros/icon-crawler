@@ -9,6 +9,14 @@ npm i
 npm start
 ```
 
+## Icons
+
+- favicon
+- apple-touch-icon
+- svg
+- [fluid](http://fluidapp.com/)
+- msapp
+
 ## Strategies
 
 ### To find the favicon
