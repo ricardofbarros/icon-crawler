@@ -11,7 +11,8 @@ config.app = {
 
 config.http = {
   port: process.env.APP_SERVER_PORT || 8000,
-  host: process.env.APP_SERVER_HOST || 'localhost'
+  hostname: process.env.APP_SERVER_HOST || 'localhost',
+  protocol: process.env.APP_SERVER_PROTOCOL || 'http'
 };
 
 config.crawler = {
