@@ -10,7 +10,7 @@ var app = express();
 app.use(boom());
 
 app.get('/get', routesHandlers.getImage);
-app.get('/proxy', routesHandlers.proxyImage);
+app.get('/proxy/*', routesHandlers.proxyImage);
 
 // Not found handler
 app.use(function (req, res) {
