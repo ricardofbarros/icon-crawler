@@ -14,24 +14,24 @@ module.exports = function (req, res) {
   var possibleTypes = [
     'favicon',
     'svg',
-    'fluid',
+    'fluidapp',
     'msapp',
     'all',
-    'apple'
+    'apple-touch'
   ];
 
   if (possibleTypes.indexOf(type) < 0) {
     return res.boom.badRequest('Invalid type');
   }
 
+  // TODO get raw domain
   var domain = url.parse(domainString);
 
   if (!domain.protocol) {
     return res.boom.badRequest('Invalid domain');
   }
 
-  // TODO document this handler
-  // and make it more all-purpose
+  // TODO make it more all-purpose
   var responseHandler = function (err, href) {
     if (err) {
       return res.boom.badRequest(err);
@@ -51,6 +51,6 @@ module.exports = function (req, res) {
 
   crawler.queue({
     uri: domainString,
-    callback: crawler.findIcons(type, responseHandler)
+    callback: crawler.findIcons(type, domain, responseHandler)
   });
 };
