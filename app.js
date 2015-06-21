@@ -2,7 +2,7 @@
 var express = require('express');
 var config = require('config.js');
 var boom = require('express-boom');
-var routesHandlers = require('./app');
+var routesHandlers = require('./app/index');
 
 var app = express();
 
