@@ -19,7 +19,7 @@ function sanitizeIconUrl (icon) {
   }
 
   // TODO cached files transform to an url
-};
+}
 
 // Route handler
 module.exports = function (req, res) {
@@ -27,7 +27,7 @@ module.exports = function (req, res) {
     return res.boom.badRequest('Missing query param domain');
   }
 
-  var domainString = req.query.domain;
+  var domain = req.query.domain;
   var type = !req.query.type ? 'favicon' : req.query.type;
 
   var possibleTypes = [
@@ -43,11 +43,11 @@ module.exports = function (req, res) {
     return res.boom.badRequest('Invalid type');
   }
 
-  // TODO get raw domain
-  var domain = url.parse(domainString);
+  var domainUrl = 'http://' + domain;
+  var urlObj = url.parse(domainUrl);
 
-  if (!domain.protocol) {
-    return res.boom.badRequest('Invalid domain');
+  if (!urlObj.protocol) {
+    return res.boom.badRequest('Invalid url');
   }
 
   // TODO make it more all-purpose
@@ -76,7 +76,7 @@ module.exports = function (req, res) {
   };
 
   crawler.queue({
-    uri: domainString,
-    callback: crawler.findIcons(type, domain, responseHandler)
+    uri: domainUrl,
+    callback: crawler.findIcons(type, urlObj, responseHandler)
   });
 };
