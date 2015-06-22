@@ -1,7 +1,7 @@
 worker_processes  4;
 user rbarros staff;
 
-error_log /usr/local/etc/nginx/logs/logs info;
+# error_log /usr/local/etc/nginx/logs/logs info;
 
 events {
     worker_connections  8096;
