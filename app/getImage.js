@@ -1,6 +1,25 @@
 // Dependencies
 var url = require('url');
 var crawler = require('lib/crawler');
+var validUrl = require('valid-url');
+var util = require('lib/util');
+
+function sanitizeIconUrl (icon) {
+  // If icon url was undefined
+  // return false
+  if (!icon) {
+    return false;
+  }
+
+  // If true the icon url returned was
+  // from third party and wasn't cached
+  // yet
+  if (validUrl.isWebUri(icon)) {
+    return util.url.shortener(icon);
+  }
+
+  // TODO cached files transform to an url
+};
 
 // Route handler
 module.exports = function (req, res) {
@@ -40,9 +59,16 @@ module.exports = function (req, res) {
     var sendObj;
 
     if (typeof href === 'string') {
+
       sendObj = {};
-      sendObj[type] = href;
+      sendObj[type] = sanitizeIconUrl(href);
     } else {
+      for (var k in href) {
+        if (href.hasOwnProperty(k)) {
+          href[k] = sanitizeIconUrl(href[k]);
+        }
+      }
+
       sendObj = href;
     }
 
