@@ -4,21 +4,26 @@ var crawler = require('lib/crawler');
 var validUrl = require('valid-url');
 var util = require('lib/util');
 
-function sanitizeIconUrl (icon) {
+function sanitizeIconUrl (icon, domainUrl) {
   // If icon url was undefined
   // return false
   if (!icon) {
     return false;
   }
 
-  // If true the icon url returned was
-  // from third party and wasn't cached
-  // yet
+  // Check if icon is hosted on
+  // website root if true
+  // return url shortened
+  if (icon[0] === '/') {
+    return util.url.shortener(url.resolve(domainUrl, icon));
+  }
+
+  // Check if icon href is a valid url
   if (validUrl.isWebUri(icon)) {
     return util.url.shortener(icon);
   }
 
-  // TODO cached files transform to an url
+  // TODO check for cached files transform to an url
 }
 
 // Route handler
@@ -43,12 +48,8 @@ module.exports = function (req, res) {
     return res.boom.badRequest('Invalid type');
   }
 
+  // TODO sanitize domains
   var domainUrl = 'http://' + domain;
-  var urlObj = url.parse(domainUrl);
-
-  if (!urlObj.protocol) {
-    return res.boom.badRequest('Invalid url');
-  }
 
   // TODO make it more all-purpose
   var responseHandler = function (err, href) {
@@ -58,14 +59,14 @@ module.exports = function (req, res) {
 
     var sendObj;
 
+    // TODO improve this
     if (typeof href === 'string') {
-
       sendObj = {};
-      sendObj[type] = sanitizeIconUrl(href);
+      sendObj[type] = sanitizeIconUrl(href, domainUrl);
     } else {
       for (var k in href) {
         if (href.hasOwnProperty(k)) {
-          href[k] = sanitizeIconUrl(href[k]);
+          href[k] = sanitizeIconUrl(href[k], domainUrl);
         }
       }
 
@@ -77,6 +78,6 @@ module.exports = function (req, res) {
 
   crawler.queue({
     uri: domainUrl,
-    callback: crawler.findIcons(type, urlObj, responseHandler)
+    callback: crawler.findIcons(type, domainUrl, responseHandler)
   });
 };
