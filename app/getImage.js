@@ -33,7 +33,7 @@ module.exports = function (req, res) {
   }
 
   var domain = req.query.domain;
-  var type = !req.query.type ? 'favicon' : req.query.type;
+  var type = !req.query.type ? 'all' : req.query.type;
 
   var possibleTypes = [
     'favicon',
@@ -57,20 +57,14 @@ module.exports = function (req, res) {
       return res.boom.badRequest(err);
     }
 
-    var sendObj;
+    var sendObj = {};
 
-    // TODO improve this
     if (typeof href === 'string') {
-      sendObj = {};
       sendObj[type] = sanitizeIconUrl(href, domainUrl);
     } else {
-      for (var k in href) {
-        if (href.hasOwnProperty(k)) {
-          href[k] = sanitizeIconUrl(href[k], domainUrl);
-        }
-      }
-
-      sendObj = href;
+      href.forEach(function (iconObj) {
+        sendObj[iconObj.type] = sanitizeIconUrl(iconObj.href, domainUrl);
+      });
     }
 
     return res.json(sendObj);
