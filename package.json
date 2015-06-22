@@ -17,6 +17,7 @@
     "download": "^4.1.2",
     "express": "^4.12.4",
     "express-boom": "^0.3.0",
+    "file-type": "^2.7.0",
     "hiredis": "^0.4.0",
     "mkdirp": "^0.5.1",
     "redis": "^0.12.1",
