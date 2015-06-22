@@ -3,10 +3,15 @@ var config = {};
 config.app = {
   // TODO better name for this. is it needed?
   numOfInstances: process.env.APP_NUM_INSTANCES || 'auto-detect',
+
   // Smallest possible
   // we dont need security
   // we need speed
-  urlShortenerCipherPass: process.env.APP_URL_CIPHER || 'd'
+  urlShortenerCipherPass: process.env.APP_URL_CIPHER || 'd',
+
+  // URI to serve cached images in
+  // the filesystem through nginx
+  nginxIconUri: process.env.APP_CACHED_ICON_URI || '/images'
 };
 
 config.http = {
