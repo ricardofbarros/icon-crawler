@@ -30,3 +30,6 @@ npm start
 - [http://realfavicongenerator.net/faq](http://realfavicongenerator.net/faq)
 - [http://www.w3.org/2005/10/howto-favicon](http://www.w3.org/2005/10/howto-favicon)
 - [https://en.wikipedia.org/wiki/Favicon](https://en.wikipedia.org/wiki/Favicon)
+- [Storing a million images in the file system](http://serverfault.com/questions/95444/storing-a-million-images-in-the-filesystem)
+- [Apple touch icons](https://developer.apple.com/library/ios/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html)
+- [More apple touch](https://realfavicongenerator.net/blog/apple-touch-icon-the-good-the-bad-the-ugly/)
