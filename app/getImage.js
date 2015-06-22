@@ -11,13 +11,6 @@ function sanitizeIconUrl (icon, domainUrl) {
     return false;
   }
 
-  // Check if icon is hosted on
-  // website root if true
-  // return url shortened
-  if (icon[0] === '/') {
-    return util.url.shortener(url.resolve(domainUrl, icon));
-  }
-
   // Check if icon href is a valid url
   if (validUrl.isWebUri(icon)) {
     return util.url.shortener(icon);
