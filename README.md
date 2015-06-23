@@ -33,3 +33,5 @@ npm start
 - [Storing a million images in the file system](http://serverfault.com/questions/95444/storing-a-million-images-in-the-filesystem)
 - [Apple touch icons](https://developer.apple.com/library/ios/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html)
 - [More apple touch](https://realfavicongenerator.net/blog/apple-touch-icon-the-good-the-bad-the-ugly/)
+- [Microsoft icons (msapp)](https://msdn.microsoft.com/en-us/library/dn255024.aspx)
+- [browserconfig.xml (msapp)](http://stackoverflow.com/a/26626329/2862991)
