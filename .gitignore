@@ -27,7 +27,4 @@ build/Release
 node_modules
 
 ## All files on tmp  that should be ignored
-tmp/*.ico
-tmp/*.jpg
-tmp/*.svg
-tmp/*.png
+tmp/**
