@@ -2,7 +2,13 @@
 var express = require('express');
 var config = require('config.js');
 var boom = require('express-boom');
+var checkSysDeps = require('./checkSysDeps');
 var routesHandlers = require('./app/index');
+
+// Check system dependencies
+// this will modify config.js
+// config.app.systemDependenciesInstalled
+checkSysDeps();
 
 var app = express();
 
