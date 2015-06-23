@@ -11,20 +11,7 @@ config.app = {
 
   // URI to serve cached images in
   // the filesystem through nginx
-  nginxIconUri: process.env.APP_CACHED_ICON_URI || '/images',
-
-  // System dependencies needed
-  // true ->  installed
-  // false -> not installed
-  //
-  // Default value is false,
-  // on app boot checkSysDeps.js will
-  // check if the dependencies are
-  // installed and modify the values
-  // if needed
-  systemDependencies: {
-    ImageMagick: false
-  }
+  nginxIconUri: process.env.APP_CACHED_ICON_URI || '/images'
 };
 
 config.http = {
