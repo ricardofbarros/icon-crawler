@@ -26,8 +26,9 @@ build/Release
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git-
 node_modules
 
-## All files on tmp  that should be ignored
-tmp/*.ico
-tmp/*.jpg
-tmp/*.svg
-tmp/*.png
+# Ignore all files on tmp
+# less the .gitkeep ones
+tmp/*
+!tmp/.gitkeep
+!tmp/msapp
+!tmp/msapp/.gitkeep
