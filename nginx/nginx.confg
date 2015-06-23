@@ -14,7 +14,7 @@ worker_rlimit_nofile 40000;
 http {
     open_file_cache          max=2000 inactive=20s;
     open_file_cache_valid    60s;
-    open_file_cache_min_uses 5;
+    open_file_cache_min_uses 1;
     open_file_cache_errors   off;
     sendfile        on;
     tcp_nopush     on;
