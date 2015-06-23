@@ -1,8 +1,8 @@
 // Dependencies
-var url = require('url');
 var crawler = require('lib/crawler');
 var validUrl = require('valid-url');
 var util = require('lib/util');
+var config = require('config.js');
 
 function sanitizeIconUrl (icon, domainUrl) {
   // If icon url was undefined
@@ -28,14 +28,8 @@ module.exports = function (req, res) {
   var domain = req.query.domain;
   var type = !req.query.type ? 'all' : req.query.type;
 
-  var possibleTypes = [
-    'favicon',
-    'svg',
-    'fluidapp',
-    'msapp',
-    'all',
-    'apple-touch'
-  ];
+  // Get possible types from config
+  var possibleTypes = Object.keys(config.app.types);
 
   if (possibleTypes.indexOf(type) < 0) {
     return res.boom.badRequest('Invalid type');
