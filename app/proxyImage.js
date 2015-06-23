@@ -1,19 +1,24 @@
 // Dependencies
 var util = require('lib/util');
 var request = require('request');
+var validUrl = require('valid-url');
 
 module.exports = function (req, res) {
-  var domainEncrypted = req.params && req.params[0] ? req.params[0] : false;
+  var hrefEncrypted = req.params && req.params[0] ? req.params[0] : false;
 
-  if (!domainEncrypted) {
+  if (!hrefEncrypted) {
     return res.boom.badRequest('Something went wrong, please try again later');
   }
 
   try {
-    var domain = util.url.decrypt(domainEncrypted);
+    var href = util.url.decrypt(hrefEncrypted);
   } catch(err) {
     return res.boom.badRequest('Not a valid icon image, please try again');
   }
 
-  request(domain).pipe(res);
+  if (!validUrl.isWebUri(href)) {
+    return res.boom.badRequest('Not a valid icon image, please try again');
+  }
+
+  return request(href).pipe(res);
 };
