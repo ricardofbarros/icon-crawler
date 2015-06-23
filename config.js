@@ -24,6 +24,16 @@ config.app = {
   // if needed
   systemDependencies: {
     ImageMagick: false
+  },
+
+  // Icon types
+  types: {
+    'favicon': process.env.APP_TYPE_FAVICON || 'favicon',
+    'svg': process.env.APP_TYPE_SVG || 'svg',
+    'fluidapp': process.env.APP_TYPE_FLUID || 'fluidapp',
+    'msapp': process.env.APP_TYPE_MS || 'msapp',
+    'all': process.env.APP_TYPE_ALL || 'all',
+    'apple-touch': process.env.APP_TYPE_APLT || 'apple-touch'
   }
 };
 
