@@ -4,25 +4,34 @@ var config = require('config.js');
 var boom = require('express-boom');
 var checkSysDeps = require('./checkSysDeps');
 var routesHandlers = require('./app/index');
+var mkdirp = require('mkdirp');
 
-// Check system dependencies
-// this will modify config.js
-// config.app.systemDependenciesInstalled
-checkSysDeps();
+// Create tmp and tmp/msapp
+// directories
+mkdirp('tmp/msapp', function (err, success) {
+  if (err) {
+    return console.log(err || new Error('Couldn\'t create tmp and tmp/msapp directories'));
+  }
 
-var app = express();
+  // Check system dependencies
+  // this will modify config.js
+  // config.app.systemDependenciesInstalled
+  checkSysDeps();
 
-// Middlewares
-app.use(boom());
+  var app = express();
 
-app.get('/get', routesHandlers.getImage);
-app.get('/proxy/*', routesHandlers.proxyImage);
+  // Middlewares
+  app.use(boom());
 
-// Not found handler
-app.use(function (req, res) {
-  return res.boom.notFound();
-});
+  app.get('/get', routesHandlers.getImage);
+  app.get('/proxy/*', routesHandlers.proxyImage);
 
-app.listen(config.http.port, function () {
-  console.log('icon-crawler lifted at port ' + config.http.port);
+  // Not found handler
+  app.use(function (req, res) {
+    return res.boom.notFound();
+  });
+
+  app.listen(config.http.port, function () {
+    console.log('icon-crawler lifted at port ' + config.http.port);
+  });
 });
