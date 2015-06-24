@@ -62,7 +62,13 @@ npm start
 - html5boilerplate.com
 
 #### meta[name=msapplication-square70x70logo]
+##### No background fill
 - none
+
+##### background fill
+- windows.microsoft.com/en-us/windows-8/create-desktop-shortcuts-icons
+> Needs to be this full uri because microsoft redirects windows.microsoft.com to microsoft.com
+> if no uri was found
 
 #### meta[name=msapplication-TileImage]
 ##### No background fill
