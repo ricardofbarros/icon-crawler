@@ -55,6 +55,9 @@ npm start
 
 ### msapp
 
+#### meta[name=msapplication-config]
+- realfavicongenerator.net
+
 #### example.com/browserconfig.xml
 - html5boilerplate.com
 
