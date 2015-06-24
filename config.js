@@ -1,9 +1,6 @@
 var config = {};
 
 config.app = {
-  // TODO better name for this. is it needed?
-  numOfInstances: process.env.APP_NUM_INSTANCES || 'auto-detect',
-
   // Smallest possible
   // we dont need security
   // we need speed
