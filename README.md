@@ -1,5 +1,7 @@
 # icon-crawler
 
+Work in progress.
+
 ## How to install and run app
 
 ```shel
@@ -9,8 +11,7 @@ npm i
 npm start
 ```
 
-## Icons
-
+## Icons supported
 - favicon
 - apple-touch
 - svg
@@ -23,7 +24,16 @@ npm start
 
 ### To scale
 
-####
+## Domains in which fallbacks were tested
+
+### browserconfig.xml
+- html5boilerplate.com
+
+### favicon.ico
+- wallfuture.com
+
+### Tile fill
+- microsoft.com
 
 ## Reading material
 
