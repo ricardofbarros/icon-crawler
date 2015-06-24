@@ -1,23 +1,9 @@
 // Dependencies
 var crawler = require('lib/crawler');
-var validUrl = require('valid-url');
-var util = require('lib/util');
+// var util = require('lib/util');
 var config = require('config.js');
-
-function sanitizeIconUrl (icon, domainUrl) {
-  // If icon url was undefined
-  // return false
-  if (!icon) {
-    return false;
-  }
-
-  // Check if icon href is a valid url
-  if (validUrl.isWebUri(icon)) {
-    return util.url.shortener(icon);
-  }
-
-  // TODO check for cached files transform to an url
-}
+var url = require('url');
+var validUrl = require('valid-url');
 
 // Route handler
 module.exports = function (req, res) {
@@ -25,40 +11,41 @@ module.exports = function (req, res) {
     return res.boom.badRequest('Missing query param domain');
   }
 
+  var types = config.app.types;
   var domain = req.query.domain;
-  var type = !req.query.type ? 'all' : req.query.type;
+  var type = !req.query.type ? types.all : req.query.type;
 
   // Get possible types from config
-  var possibleTypes = Object.keys(config.app.types);
+  var possibleTypes = Object.keys(types);
 
   if (possibleTypes.indexOf(type) < 0) {
     return res.boom.badRequest('Invalid type');
   }
 
-  // TODO sanitize domains
-  var domainUrl = 'http://' + domain;
+  // If protocol is not present
+  // add default protocol
+  if (domain.search(/^http(s*):\/\//)) {
+    domain = 'http://' + domain;
+  }
 
-  // TODO make it more all-purpose
-  var responseHandler = function (err, href) {
-    if (err) {
-      return res.boom.badRequest(err);
-    }
+  if (!validUrl.isWebUri(domain)) {
+    return res.boom.badRequest('Invalid domain');
+  }
 
-    var sendObj = {};
+  // sanitize domain by removing
+  // the subsequent uri
+  domain = url.parse(domain);
+  domain = 'http://' + domain.host;
 
-    if (typeof href === 'string') {
-      sendObj[type] = sanitizeIconUrl(href, domainUrl);
-    } else {
-      href.forEach(function (iconObj) {
-        sendObj[iconObj.type] = sanitizeIconUrl(iconObj.href, domainUrl);
-      });
-    }
-
-    return res.json(sendObj);
-  };
-
+  // TODO go redis check cache
   crawler.queue({
-    uri: domainUrl,
-    callback: crawler.findIcons(type, domainUrl, responseHandler)
+    uri: domain,
+    callback: crawler.findIcons(type, domain, function (err, hrefObj) {
+      if (err) {
+        return res.boom.badRequest(err);
+      }
+
+      return res.json(hrefObj);
+    })
   });
 };
