@@ -62,7 +62,7 @@ npm start
 - html5boilerplate.com
 
 #### meta[name=msapplication-square70x70logo]
-- windows.microsoft.com
+- none
 
 #### meta[name=msapplication-TileImage]
 ##### No background fill
