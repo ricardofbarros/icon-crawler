@@ -34,13 +34,16 @@ module.exports = function (req, res) {
 
   // sanitize domain by removing
   // the subsequent uri
-  domain = url.parse(domain);
-  domain = 'http://' + domain.host;
-
+  var domainUrl = url.parse(domain);
+  domainUrl = 'http://' + domainUrl.host;
+  
+  // TODO check if this domain
+  // is in WIP (Work in Progress)
+  //
   // TODO go redis check cache
   crawler.queue({
     uri: domain,
-    callback: crawler.findIcons(type, domain, function (err, hrefObj) {
+    callback: crawler.findIcons(type, domainUrl, function (err, hrefObj) {
       if (err) {
         return res.boom.badRequest(err);
       }
