@@ -26,14 +26,53 @@ npm start
 
 ## Domains in which fallbacks were tested
 
-### browserconfig.xml
-- html5boilerplate.com
+### favicon
 
-### favicon.ico
+#### link[rel=icon]
+- microsoft.com
+- github.com
+
+#### example.com/favicon.ico
+- none
+
+#### www.example.com/favicon.ico
 - wallfuture.com
 
-### Tile fill
-- microsoft.com
+### apple-touch
+
+#### link[rel=apple-touch-icon]
+- github.com
+
+### svg
+
+#### link[rel=icon]
+- github.com
+
+### fluidapp
+
+#### link[rel=fluid-icon]
+- github.com
+
+### msapp
+
+#### example.com/browserconfig.xml
+- html5boilerplate.com
+
+#### meta[name=msapplication-square70x70logo]
+- windows.microsoft.com
+
+#### meta[name=msapplication-TileImage]
+##### No background fill
+- github.com
+
+##### background fill
+- none
+
+
+
+
+
+
 
 ## Reading material
 
