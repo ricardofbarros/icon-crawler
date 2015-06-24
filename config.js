@@ -31,7 +31,7 @@ config.app = {
     favicon: process.env.APP_TYPE_FAVICON || 'favicon',
     svg: process.env.APP_TYPE_SVG || 'svg',
     fluid: process.env.APP_TYPE_FLUID || 'fluidapp',
-    msapp: process.env.APP_TYPE_MS || 'msapp',
+    msapp: process.env.APP_TYPE_MSAPP || 'msapp',
     all: process.env.APP_TYPE_ALL || 'all',
     appleTouch: process.env.APP_TYPE_APLT || 'apple-touch'
   }
