@@ -56,6 +56,14 @@ config.crawler = {
   retries: process.env.APP_CRAWLER_RETRIES || 1
 };
 
+config.redis = {
+  options: {
+    host: process.env.APP_REDIS_HOST || 'localhost',
+    port: process.env.APP_REDIS_PORT || 6379
+  },
+  authPassword: process.env.APP_REDIS_AUTH_PASS || false
+};
+
 config.cache = {
   occurencesMemory: 5, // number of occurences that we should start to cache in memory
   imagesTTL: 300 // time to live of images in seconds
