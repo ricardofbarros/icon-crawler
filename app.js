@@ -31,7 +31,7 @@ mkdirp('tmp/__queueMsAppIcons', function (err, success) {
     return res.boom.notFound();
   });
 
-  app.listen(config.http.port, function () {
-    console.log('icon-crawler lifted at port ' + config.http.port);
+  app.listen(config.app.http.port, function () {
+    console.log('icon-crawler lifted at port ' + config.app.http.port);
   });
 });

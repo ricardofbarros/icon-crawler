@@ -9,9 +9,12 @@ config.app = {
   // we need speed
   urlShortenerCipherPass: process.env.APP_URL_CIPHER || 'd',
 
-  // URI to serve cached images in
-  // the filesystem through nginx
-  nginxIconUri: process.env.APP_CACHED_ICON_URI || '/images',
+  // Node.js App HTTP Server config
+  http: {
+    port: process.env.APP_SERVER_PORT || 8000,
+    hostname: process.env.APP_SERVER_HOST || 'localhost',
+    protocol: process.env.APP_SERVER_PROTOCOL || 'http'
+  },
 
   // System dependencies needed
   // true ->  installed
@@ -38,10 +41,16 @@ config.app = {
   }
 };
 
-config.http = {
-  port: process.env.APP_SERVER_PORT || 8000,
-  hostname: process.env.APP_SERVER_HOST || 'localhost',
-  protocol: process.env.APP_SERVER_PROTOCOL || 'http'
+config.nginx = {
+  // URI to serve cached images in
+  // the filesystem through nginx
+  iconUri: process.env.APP_NGINX_ICON_URI || '/images',
+
+  reverseProxy: {
+    port: process.env.APP_NGINX_SERVER_PORT || 8080,
+    hostname: process.env.APP_NGINX_SERVER_HOST || 'localhost',
+    protocol: process.env.APP_NGINX_SERVER_PROTOCOL || 'http'
+  }
 };
 
 config.crawler = {
