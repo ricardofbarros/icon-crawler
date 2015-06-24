@@ -26,7 +26,8 @@ config.app = {
     ImageMagick: false
   },
 
-  // Icon types
+  // Icon types. This is as well
+  // the response interface
   types: {
     favicon: process.env.APP_TYPE_FAVICON || 'favicon',
     svg: process.env.APP_TYPE_SVG || 'svg',
