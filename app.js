@@ -6,11 +6,11 @@ var checkSysDeps = require('./checkSysDeps');
 var routesHandlers = require('./app/index');
 var mkdirp = require('mkdirp');
 
-// Create tmp and tmp/msapp
+// Create tmp and tmp/__queueMsAppIcons
 // directories
-mkdirp('tmp/msapp', function (err, success) {
+mkdirp('tmp/__queueMsAppIcons', function (err, success) {
   if (err) {
-    return console.log(err || new Error('Couldn\'t create tmp and tmp/msapp directories'));
+    return console.log(err || new Error('Couldn\'t create tmp and tmp/__queueMsAppIcons directories'));
   }
 
   // Check system dependencies
