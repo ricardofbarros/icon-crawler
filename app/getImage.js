@@ -4,6 +4,7 @@ var crawler = require('lib/crawler');
 var config = require('config.js');
 var url = require('url');
 var validUrl = require('valid-url');
+var FileCacheMetadata = require('lib/helpers/FileCache/Metadata');
 
 // Route handler
 module.exports = function (req, res) {
@@ -36,19 +37,38 @@ module.exports = function (req, res) {
   // the subsequent uri
   var domainUrl = url.parse(domain);
   domainUrl = 'http://' + domainUrl.host;
-  
+
   // TODO check if this domain
   // is in WIP (Work in Progress)
   //
-  // TODO go redis check cache
-  crawler.queue({
-    uri: domain,
-    callback: crawler.findIcons(type, domainUrl, function (err, hrefObj) {
-      if (err) {
-        return res.boom.badRequest(err);
-      }
 
-      return res.json(hrefObj);
-    })
+  var responseHandler = function (err, hrefObj) {
+    if (err) {
+      return res.boom.badRequest(err);
+    }
+
+    return res.json(hrefObj);
+  };
+
+  var fileCacheMetadata = new FileCacheMetadata(domainUrl);
+
+  return fileCacheMetadata.get(function (err, hrefObj) {
+    if (err) {
+      return res.boom.badRequest(err);
+    }
+
+    // If files havenn't been cached yet
+    // start crawler in the request domain
+    if (!hrefObj) {
+      return crawler.queue({
+        uri: domain,
+        callback: crawler.findIcons(type, domainUrl, responseHandler)
+      });
+    }
+
+    // Increase score of the requested domain
+    fileCacheMetadata.incrementZset();
+
+    return responseHandler(err, hrefObj);
   });
 };
