@@ -22,6 +22,8 @@ http {
     keepalive_timeout  15;
     gzip  on;
 
+    include /etc/nginx/mime.types;
+
     upstream socket_nodes {
         server localhost:8000;
         server localhost:8001;
