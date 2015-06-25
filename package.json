@@ -1,7 +1,7 @@
 {
   "name": "icon-crawler",
   "version": "0.0.0",
-  "description": "Dashlane challenge",
+  "description": "Icon crawler app",
   "main": "index.js",
   "scripts": {
     "test": " ",
