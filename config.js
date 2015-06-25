@@ -35,7 +35,10 @@ config.app = {
     msapp: process.env.APP_TYPE_MSAPP || 'msapp',
     all: process.env.APP_TYPE_ALL || 'all',
     appleTouch: process.env.APP_TYPE_APLT || 'apple-touch'
-  }
+  },
+
+  // Useful for FileCache
+  directoryPath: __dirname
 };
 
 config.nginx = {
