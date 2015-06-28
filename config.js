@@ -67,4 +67,8 @@ config.redis = {
   authPassword: process.env.APP_REDIS_AUTH_PASS || false
 };
 
+config.cache = {
+  checkInterval: process.env.APP_CACHE_CHECK_INTERVAL || 5 // minutes
+};
+
 module.exports = config;
