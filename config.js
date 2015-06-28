@@ -67,9 +67,4 @@ config.redis = {
   authPassword: process.env.APP_REDIS_AUTH_PASS || false
 };
 
-config.cache = {
-  occurencesMemory: 5, // number of occurences that we should start to cache in memory
-  imagesTTL: 300 // time to live of images in seconds
-};
-
 module.exports = config;
