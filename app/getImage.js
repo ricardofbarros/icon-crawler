@@ -6,18 +6,26 @@ var url = require('url');
 var validUrl = require('valid-url');
 var FileCacheMetadata = require('lib/helpers/FileCache/Metadata');
 
+// Get possible types from config
+// and store them in an array
+var types = config.app.types;
+var possibleTypes = [];
+
+for (var k in types) {
+  if (types.hasOwnProperty(k)) {
+    possibleTypes.push(types[k]);
+  }
+}
+
 // Route handler
 module.exports = function (req, res) {
   if (!req.query.domain) {
     return res.boom.badRequest('Missing query param domain');
   }
 
-  var types = config.app.types;
+
   var domain = req.query.domain;
   var type = !req.query.type ? types.all : req.query.type;
-
-  // Get possible types from config
-  var possibleTypes = Object.keys(types);
 
   if (possibleTypes.indexOf(type) < 0) {
     return res.boom.badRequest('Invalid type');
