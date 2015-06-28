@@ -57,6 +57,9 @@ module.exports = function (req, res) {
       return res.boom.badRequest(err);
     }
 
+    // Increase score of the requested domain
+    fileCacheMetadata.incrementZset();
+
     // If files havenn't been cached yet
     // start crawler in the request domain
     if (!hrefObj) {
@@ -65,9 +68,6 @@ module.exports = function (req, res) {
         callback: crawler.findIcons(type, domainUrl, responseHandler)
       });
     }
-
-    // Increase score of the requested domain
-    fileCacheMetadata.incrementZset();
 
     return responseHandler(err, hrefObj);
   });
