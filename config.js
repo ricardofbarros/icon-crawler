@@ -42,10 +42,6 @@ config.app = {
 };
 
 config.reverseProxy = {
-  // URI to serve cached images in
-  // the filesystem through the reverse proxy
-  iconUri: process.env.APP_REVPROXY_ICON_URI || '/images',
-
   http: {
     port: process.env.APP_REVPROXY_SERVER_PORT || 8000,
     hostname: process.env.APP_REVPROXY_SERVER_HOST || 'localhost',
