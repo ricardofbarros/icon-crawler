@@ -23,8 +23,8 @@ module.exports = function (callback) {
 
   return async.parallel([
     function (done) {
-      ImageMagick(function (err) {
-        return done(err);
+      ImageMagick(function () {
+        return done();
       });
     }
   ], callback);
