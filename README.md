@@ -3,6 +3,7 @@
 [WIP] Documentation needs to be finished
 
 ## Live version
+http://178.62.216.242/get?domain=github.com
 
 ## System Dependencies
 - **node.js**
