@@ -23,7 +23,8 @@ config.app = {
   // installed and modify the values
   // if needed
   systemDependencies: {
-    ImageMagick: false
+    ImageMagick: false,
+    reverseProxy: false
   },
 
   // Icon types. This is as well
