@@ -68,7 +68,7 @@ config.redis = {
 };
 
 config.cache = {
-  checkInterval: process.env.APP_CACHE_CHECK_INTERVAL || 5 // minutes
+  checkInterval: process.env.APP_CACHE_CHECK_INTERVAL || 0.5 // minutes
 };
 
 module.exports = config;
