@@ -24,7 +24,7 @@ module.exports = function (req, res) {
   }
 
   var domain = req.query.domain;
-  var type = !req.query.type ? types.all : req.query.type;
+  var type = !req.query.type ? 'all' : req.query.type;
 
   // Sanitize type strings
   if (!util.isArray(type)) {
@@ -32,11 +32,13 @@ module.exports = function (req, res) {
   }
 
   // Check if this type is supported
-  type.forEach(function (t) {
-    if (possibleTypes.indexOf(t) < 0) {
-      return res.boom.badRequest('Invalid type');
+  if (!(type.length === 1 && type[0] === 'all')) {
+    for (var i = 0; i < type.length; i++) {
+      if (possibleTypes.indexOf(type[i]) < 0) {
+        return res.boom.badRequest('Invalid type');
+      }
     }
-  });
+  }
 
   // If protocol is not present
   // add default protocol
@@ -84,10 +86,17 @@ module.exports = function (req, res) {
       });
     }
 
-    // Convert 'false' to false
     for (var k in hrefObj) {
-      if (hrefObj.hasOwnProperty(k) && hrefObj[k] === 'false') {
-        hrefObj[k] = false;
+      if (hrefObj.hasOwnProperty(k)) {
+        if (type[0] !== 'all' && type.indexOf(k) < 0) {
+          delete hrefObj[k];
+          continue;
+        }
+
+        // Convert 'false' to false
+        if (hrefObj[k] === 'false') {
+          hrefObj[k] = false;
+        }
       }
     }
 
