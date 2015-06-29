@@ -41,15 +41,15 @@ config.app = {
   directoryPath: __dirname
 };
 
-config.nginx = {
+config.reverseProxy = {
   // URI to serve cached images in
-  // the filesystem through nginx
-  iconUri: process.env.APP_NGINX_ICON_URI || '/images',
+  // the filesystem through the reverse proxy
+  iconUri: process.env.APP_REVPROXY_ICON_URI || '/images',
 
-  reverseProxy: {
-    port: process.env.APP_NGINX_SERVER_PORT || 8080,
-    hostname: process.env.APP_NGINX_SERVER_HOST || 'localhost',
-    protocol: process.env.APP_NGINX_SERVER_PROTOCOL || 'http'
+  http: {
+    port: process.env.APP_REVPROXY_SERVER_PORT || 8000,
+    hostname: process.env.APP_REVPROXY_SERVER_HOST || 'localhost',
+    protocol: process.env.APP_REVPROXY_SERVER_PROTOCOL || 'http'
   }
 };
 
