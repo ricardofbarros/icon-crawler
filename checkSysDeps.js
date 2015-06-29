@@ -19,7 +19,7 @@ function ImageMagick (callback) {
 
 function reverseProxy () {
   var httpDomain = url.format(config.app.http);
-  var reverseProxyDomain = url.fromat(config.reverseProxy.http);
+  var reverseProxyDomain = url.format(config.reverseProxy.http);
 
   if (httpDomain !== reverseProxyDomain) {
     config.app.systemDependencies.reverseProxy = true;
