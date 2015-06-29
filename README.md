@@ -73,7 +73,7 @@ Let's get real node.js is nowhere near the performance output of nginx on the de
 
 ## Cool stuff implemented
 - windows tiles background fill - This app will call `ImageMagick` to fill the background of the `.png` images with the color specified in the meta tag `TileColor`
-- Request only a specific type or types by passing the query parameter `type`. Like this: `http://iconcrawler.com/get?domain=github.com&type=svg` or multiple types `http://iconcrawler.com/get?domain=github.com&type[0]=svg&type[1]=favicon`
+- Request only a specific type or types by passing the query parameter `type`. Like this: [single type](http://178.62.216.242/get?domain=github.com&type=svg) or [multiple types](http://178.62.216.242/get?domain=github.com&type[0]=svg&type[1]=favicon) 
 
 
 ## To be implemented
