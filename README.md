@@ -1,9 +1,24 @@
 # icon-crawler
 
-[WIP] Documentation needs to be finished
+A simple domain icon crawler on-demand.
+
+This app supports various types of icons because most of the time those icons are all different and have different use cases, so it's cool being able to get a particular type of icon.
+
+Currently supported icons:
+
+- favicon
+- apple-touch
+- svg
+- [fluidapp](http://fluidapp.com/)
+- msapp
 
 ## Live version
-http://178.62.216.242/get?domain=github.com
+http://178.62.216.242
+
+### Requests examples
+- http://178.62.216.242/get?domain=github.com (Crawl all icons)
+- http://178.62.216.242/get?domain=github.com&type=svg (Crawl just the svg icon)
+- http://178.62.216.242/get?domain=github.com&type[0]=svg&type[1]=msapp (Crawl the svg and the msapp icons)
 
 ## System Dependencies
 - **node.js**
@@ -28,21 +43,39 @@ A reverse proxy is fundamental to scale the app, this will be explained why late
 
 If you want to know what configurations I used on nginx you can take a look into `nginx/nginx.confg`.
 
-## Icons supported
-This app supports various types of icons because most of the times they are all different and have different use cases.
-
-Currently supported icons:
-
-- favicon
-- apple-touch
-- svg
-- [fluidapp](http://fluidapp.com/)
-- msapp
-
 ## Strategies
 
 ### To find the favicon
-Please read the [wiki]() as this is a extensive to read topic.
+There are various fallbacks strategies to catch the icons. I will explain the logic flow to catch them. _Gotta catch 'em all!_
+
+#### favicon
+**Preference order:**
+- `.png`
+- `.gif`
+- `.ico`
+
+**Logic flow:**
+- Try to get all `link[rel=icon]`, this returns as well the `shortcut icon` elements.
+  - **If found:** Check for extension in the property `href`, it must be a `.png`, `.gif` or a `.ico`. Return following the preference order.
+- **Fallback:** Make the following requests in the order they are presented: `http://example.com/favicon.ico` and `http://www.example.com/favicon.ico`. If a valid asset is hit return it.
+
+#### apple-touch
+**Preference order:**
+- _Squared_ icons from the biggest dimension to the smallest dimension. (320x320, 160x160, 60x60).
+- Wide/rectangle a like icons (320x160, 120x60, etc.)
+
+- Try to get `link[rel=apple-touch-icon-precomposed]`.
+  - **If found:** Return the href following the preference order.
+- **1st Fallback:** Try to get `link[rel=apple-touch-icon]`.
+  - **If found:** Return the href following the preference order.
+- **2nd Fallback:** Make the following requests in the order they are presented: `http://example.com/apple-touch-icon.png` and `http://www.example.com/apple-touch-icon.png`. If a valid asset is hit return it.
+
+#### svg
+
+#### fluidapp
+
+#### msapp
+
 
 ### To scale
 
@@ -73,8 +106,7 @@ Let's get real node.js is nowhere near the performance output of nginx on the de
 
 ## Cool stuff implemented
 - windows tiles background fill - This app will call `ImageMagick` to fill the background of the `.png` images with the color specified in the meta tag `TileColor`
-- Request only a specific type or types by passing the query parameter `type`. Like this: [single type](http://178.62.216.242/get?domain=github.com&type=svg) or [multiple types](http://178.62.216.242/get?domain=github.com&type[0]=svg&type[1]=favicon) 
-
+- Request only a specific type or types by passing the query parameter `type`. Like this: [single type](http://178.62.216.242/get?domain=github.com&type=svg) or [multiple types](http://178.62.216.242/get?domain=github.com&type[0]=svg&type[1]=favicon)
 
 ## To be implemented
 Some stuff wasn't implemented because I didn't have time to do it, but for the record this are the missing features:
@@ -83,6 +115,7 @@ Some stuff wasn't implemented because I didn't have time to do it, but for the r
 - Delete not used cached files from tmp directory.
 
 ## Reading material
+I didn't know everything about the web standards regarding the icons, so I had to do my research.
 
 - [http://realfavicongenerator.net/faq](http://realfavicongenerator.net/faq)
 - [http://www.w3.org/2005/10/howto-favicon](http://www.w3.org/2005/10/howto-favicon)
