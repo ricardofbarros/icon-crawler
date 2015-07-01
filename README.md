@@ -142,7 +142,33 @@ Let's get real node.js is nowhere near the performance output of nginx on the de
 
 > The benchmarks were done using the [wrk](https://github.com/wg/wrk) tool
 
-#### Using redis to manage hot cache and cold cache
+#### Using redis to manage warm/hot cache and cold cache
+There is a great answer for the topic of `warm cache and cold cache` in [stackexchange](http://unix.stackexchange.com/questions/122362/what-does-it-mean-by-cold-cache-and-warm-cache-concept).
+
+The implementation of this concept is pretty simple and straightforward.
+I used `zsets` and `hash sets` to accomplish this.
+
+On the `hash sets` I stored information of where are the images of a specific domain stored in the filesystem. For instance take the following domain `github.com` to exemplify the data structure:
+
+- **key:** `icon-crawler:github.com`
+  - **field:** 'favicon', **value:** '/some/where/in/the/fs/favicon.ico'
+  - **field:** 'apple-touch', **value:** '/some/where/in/the/fs/apple-touch.png'  
+  - **field:** 'svg', **value:** '/some/where/in/the/fs/svg.svg'  
+  - **field:** 'fluidapp', **value:** '/some/where/in/the/fs/fluidapp.png'  
+  - **field:** 'msapp', **value:** '/some/where/in/the/fs/msapp.png'  
+
+So that's how I store information of the domains. So when someone request to get the icons of the domain `github.com` I will check if the key `icon-crawler:github.com` exists, if it exists I transform those fs paths into url in which the reverse proxy "understands".
+
+Until here, this is basic caching of the "metadata".
+
+So now the implementation of the concept of warm/hot cache and cold cache. For this I used a single `zset`.
+
+In this set I add a domain to the set (only do it if it doesn't exist) and increase the score of that domain by `+1` on each request to crawl to that domain. **This is "heating" the cache.**
+
+Then I have the following worker `lib/workers/zsetDecrementer.js` running in every x seconds (this is configurable in through `config.js`). This worker is basically a cycle to decrement all items on the zset by `-1`. **This is "cooling" the cache.**
+
+Then I have the following worker `lib/workers/deleteCacheExpired` running as well in every x seconds (also configurable). This is workers is in charge of disposing **cold cache**. In technical terms it will remove all items that are bellow the score `1`.
+
 
 ## Cool stuff implemented
 - windows tiles background fill - This app will call `ImageMagick` to fill the background of the `.png` images with the color specified in the meta tag `TileColor`
