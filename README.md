@@ -26,7 +26,7 @@ http://178.62.216.242
 - nginx (optional)
 - ImageMagick (optional)
 
-## How to install and run app
+## How to install and run the app
 
 This app is ready to work out of the box with only `node` and `redis` installed, you just need to clone the repo, install the dependencies and you are ready to go, but this type of configuration won't scale the app so well.
 
@@ -64,6 +64,7 @@ There are various fallbacks strategies to catch the icons. I will explain the lo
 - _Squared_ icons from the biggest dimension to the smallest dimension. (320x320, 160x160, 60x60).
 - Wide/rectangle a like icons (320x160, 120x60, etc.)
 
+**Logic flow:**
 - Try to get `link[rel=apple-touch-icon-precomposed]`.
   - **If found:** Return the href following the preference order.
 - **1st Fallback:** Try to get `link[rel=apple-touch-icon]`.
@@ -71,10 +72,49 @@ There are various fallbacks strategies to catch the icons. I will explain the lo
 - **2nd Fallback:** Make the following requests in the order they are presented: `http://example.com/apple-touch-icon.png` and `http://www.example.com/apple-touch-icon.png`. If a valid asset is hit return it.
 
 #### svg
+**Logic Flow:**
+- Try to get all `link[rel=icon]`, this returns as well the `shortcut icon` elements.
+  - **If found:** Filter for `.svg` extension. Return if found any.
 
 #### fluidapp
+**Logic Flow:**
+- Try to get `link[rel=fluid-icon]`.
+  - **If found:** Return it.
 
 #### msapp
+**NOTE:** The logic flow for this icons is more complex than the rest.
+
+**Preference flow for items in browserconfig.xml:**
+- square150x150logo
+- square70x70logo
+- TileImage
+
+**Logic Flow:**
+- Try to get `meta[name=msapplication-TileColor]`
+  - **If found:** In the last stage of this logic flow we need to fill the `.png`. Switch the image transparency with the color found.
+- Try to get `meta[name=msapplication-square150x150logo]`.
+  - **If found:**
+    - **Is TileColor defined?**
+      - **Yes** - Pass the url of the image and the color to `lib/workers/windowsTileFiller`. When the image fill is finished this worker will respond to the request.
+      - **No** - Just return the url of the image.
+- **1st fallback:** Try to get `meta[name=msapplication-square70x70logo]`.
+  - **If found:**
+    - **Is TileColor defined?**
+      - **Yes** - Pass the url of the image and the color to `lib/workers/windowsTileFiller`. When the image fill is finished this worker will respond to the request.
+      - **No** - Just return the url of the image.
+- **2nd fallback:** Try to get `meta[name=msapplication-TileImage]`.
+  - **If found:**
+    - **Is TileColor defined?**
+      - **Yes** - Pass the url of the image and the color to `lib/workers/windowsTileFiller`. When the image fill is finished this worker will respond to the request.
+      - **No** - Just return the url of the image.
+- **3rd fallback:** Try to get `meta[name=msapplication-config]`. (browserconfig.xml)
+  - **If found:** Get the `browserconfig.xml` and parse it. Look for `square150x150logo`, `square70x70logo`, `TileImage` and `TileColor`.
+    - **If found any items in browserconfig.xml:** Choose icon according to preference flow for items in browserconfig.xml. Then we check if..
+      - **Is TileColor defined?**
+        - **Yes** - Pass the url of the image and the color to `lib/workers/windowsTileFiller`. When the image fill is finished this worker will respond to the request.
+        - **No** - Just return the url of the image.
+- **4th fallback:** Make the following requests in the order they are presented: `http://example.com/browserconfig.xml` and `http://www.example.com/browserconfig.xml`.
+  - **If a valid asset is hit:** Repeat the steps of the 3rd fallback.
 
 
 ### To scale
