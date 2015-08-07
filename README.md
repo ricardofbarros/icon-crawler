@@ -13,7 +13,7 @@ Currently supported icons:
 - msapp
 
 ## Live version
-http://178.62.216.242
+http://178.62.216.242 **(currently off)**
 
 ### Requests examples
 - http://178.62.216.242/get?domain=github.com (Crawl all icons)
